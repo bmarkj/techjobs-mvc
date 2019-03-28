@@ -23,5 +23,15 @@ public class SearchController {
     }
 
     // TODO #1 - Create handler to process search request and display results
+    @RequestMapping(value="results")
+    public String search(Model model, @RequestParam String searchType, @RequestParam String searchTerm) {
+        ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+        model.addAttribute("jobCount", jobs.size() + " Result(s)");
+        //model.addAttribute("columns", ListController.columnChoices);
+        model.addAttribute("jobs", jobs); //place search results in model so views can retrieve it
+
+        return "search"; //this is an HTML file, you just don't add teh extension to it
+
+    }
 
 }
